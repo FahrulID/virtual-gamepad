@@ -128,10 +128,14 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm install
    ```
-2. Create self-signed SSL and then put it inside the "SSL" folder, 
+3. Create self-signed SSL and then put it inside the "SSL" folder, 
    you can use this command using git bash in windows
    ```sh
    openssl req -x509 -newkey rsa:2048 -keyout keytmp.pem -out cert.pem -days 365
+   ```
+4. To create executable, run this command
+   ```sh
+   pkg --config package.json index.js
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

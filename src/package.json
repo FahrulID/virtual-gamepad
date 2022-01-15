@@ -24,6 +24,8 @@
       "./node_modules/vigemclient/build/Release/vigemclient.node"
     ],
     "outputPath": "../build",
-    "targets": [ "node16-win-x64" ]
+    "targets": [ 
+      "node16-win-x64"
+    ]
   }
 }
