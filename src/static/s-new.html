@@ -1,0 +1,148 @@
+<!DOCTYPE>
+<html lang="en">
+   <head>
+      <title>XBOX 360</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script type="text/javascript" src="js/socket.io.min.js"></script>
+      <script src="js/jquery-3.5.1.min.js"></script>
+      <link rel="stylesheet" href="css/s-new.css">
+   </head>
+   <body scroll="no" style="overflow: hidden;position: fixed;">
+      <div id="menu_toggle" class="menu_toggle" onclick="toggleMenu();">
+         <span class="top"></span>
+         <span class="middle"></span>
+         <span class="bottom"></span>
+      </div>
+      <div id="menu" class="overlay">
+         <!-- Overlay content -->
+         <div class="overlay-content">
+            <a class="section-change" for="gamepad" onclick="changeSection(this);">Gamepad</a>
+            <a class="section-change" for="settings" onclick="changeSection(this);">Settings</a>
+            <a class="section-change" for="extras" onclick="changeSection(this);">Extra Buttons</a>
+            <a class="section-change" for="infos" onclick="changeSection(this);">Info</a>
+         </div>
+      </div>
+      <section id="gamepad" class="wrapper active">
+         <div class="top-buttons">
+            <div class="left">
+               <input type="range" min="0" max="100" value="0" class="slider" id="lt-range" name="LEFT_TRIGGER">
+               <button id="lb" name="LEFT_SHOULDER"></button>
+            </div>
+            <div class="right">
+               <button id="rb" name="RIGHT_SHOULDER"></button>
+               <input type="range" min="0" max="100" value="0" class="slider" id="rt-range" name="RIGHT_TRIGGER">
+            </div>
+         </div>
+         <div class="bot-buttons">
+            <div class="left">
+               <div class="lsb">
+                  <p id="lsb-p" style="display:none ;text-align: center; color: #ffffff;">
+                     X: <span id="x_coordinate-lsb">0</span>
+                     Y: <span id="y_coordinate-lsb">0</span>
+                     Speed: <span id="speed-lsb">0</span> %
+                     Angle: <span id="angle-lsb">0</span>
+                  </p>
+                  <canvas id="lsb" name="ANALOG_LEFT"></canvas>
+               </div>
+               <div class="dpad">
+                  <div class="d-pad">
+                     <button class="up" id="d-pad-up" name="DPAD" x="0" y="1"></button>
+                     <button class="up-right" id="d-pad-up-right" name="DPAD" x="1" y="1"></button>
+                     <button class="right" id="d-pad-right" name="DPAD" x="1" y="0"></button>
+                     <button class="down-right" id="d-pad-down-right" name="DPAD" x="1" y="-1"></button>
+                     <button class="down" id="d-pad-down" name="DPAD" x="0" y="-1"></button>
+                     <button class="up-left" id="d-pad-up-left" name="DPAD" x="-1" y="1"></button>  
+                     <button class="left" id="d-pad-left" name="DPAD" x="-1" y="0"></button>  
+                     <button class="down-left" id="d-pad-down-left" name="DPAD" x="-1" y="-1"></button>  
+                  </div>
+               </div>
+            </div>
+            <div class="center-button">
+               <div class="extras">
+                  <div class="back">
+                     <button id="back" name="BACK"></button>
+                  </div>
+                  <div class="middle">
+                     <button id="guide" name="GUIDE"></button>
+                     <button onclick="toggleFullScreen(document.body);toggleRotate()" id="fullscreen"></button>
+                  </div>
+                  <div class="start">
+                     <button id="start" name="START"></button>
+                  </div>
+               </div>
+            </div>
+            <div class="right">
+               <div class="rsb">
+                  <p style="display:none" id="rsb-p" style="text-align: center; color: #ffffff;">
+                     X: <span id="x_coordinate-rsb">0</span>
+                     Y: <span id="y_coordinate-rsb">0</span>
+                     Speed: <span id="speed-rsb">0</span> %
+                     Angle: <span id="angle-rsb">0</span>
+                  </p>
+                  <canvas id="rsb" name="ANALOG_RIGHT"></canvas>
+               </div>
+               <div class="xyab">
+                  <div class="y">
+                     <button id="y" name="TOP_BUTTON"></button>
+                  </div>
+                  <div class="xb">
+                     <div class="x">
+                        <button id="x" name="LEFT_BUTTON"></button>
+                     </div>
+                     <div class="b">
+                        <button id="b" name="RIGHT_BUTTON"></button>
+                     </div>
+                  </div>
+                  <div class="a">
+                     <button id="a" name="BOTTOM_BUTTON"></button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <section id="settings" class="wrapper inactive">
+         <div class="settings">
+            <div class="accelerometer">
+               <div class="switch">
+                  <input type="checkbox" id="accelerometer" onclick="updateSettings();"/>
+                  <label for="accelerometer"></label>
+               </div>
+               <label for="accelerometer">Activate Accelerometer</label>
+            </div>
+            <div class="gyro">
+               <div class="switch">
+                  <input type="checkbox" id="gyro" onclick="updateSettings();"/>
+                  <label for="gyro"></label>
+               </div>
+               <label for="gyro">Activate Gyro</label>
+            </div>
+            <div class="vibration">
+               <div class="switch">
+                  <input type="checkbox" id="vibration"/>
+                  <label for="vibration"></label>
+               </div>
+               <label for="vibration">Activate Vibration</label>
+            </div>
+            <div class="lock">
+               <div class="switch">
+                  <input type="checkbox" id="lock" />
+                  <label for="lock"></label>
+               </div>
+               <label for="vibration">Activate Lock Axes</label>
+            </div>
+         </div>
+      </section>
+      <section id="extras" class="wrapper inactive">
+         <div class="settings">
+            <div class="ping">
+               <button id="ping" class="btn" onclick="ping();">Latency Check</button>
+               <label id="ping-latency" for="ping" style="margin-left:20px;">Press button to check</label>
+            </div>
+         </div>
+      </section>
+      <section id="infos" class="wrapper inactive">
+          
+      </section>
+      <script type="text/javascript" src="js/s-new.js"></script>
+   </body>
+</html>

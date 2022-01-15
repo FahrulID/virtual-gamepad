@@ -1,0 +1,7 @@
+<script src="js/socket.io.min.js"></script>
+<script>
+    var socket = io();
+    socket.on('message', function(data){
+        console.log(data);  
+    });
+</script>

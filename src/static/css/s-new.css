@@ -1,0 +1,818 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	color: #fff;
+}
+
+section.active {
+	display: flex;
+}
+
+section.inactive {
+	display: none;
+}
+
+.btn {
+	color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+button,
+.slider::-webkit-slider-thumb {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #212123;
+}
+
+.wrapper:fullscreen {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #212123;
+}
+
+.wrapper:-webkit-full-screen {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #212123;
+}
+
+.wrapper:-moz-full-screen {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #212123;
+}
+
+.top-buttons,
+.bot-buttons {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.bot-buttons {
+	height: 100%;
+}
+
+.top-buttons>.left,
+.top-buttons>.right {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.bot-buttons>.left {
+	width: 100%;
+	display: flex;
+}
+
+.center-button {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.center-button>.extras {
+	flex-direction: row;
+	display: flex;
+}
+
+.extras>.middle {
+	display: flex;
+	flex-direction: column;
+}
+
+.bot-buttons>.right {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.bot-buttons>.right>.xyab {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.bot-buttons>.right>.xyab>.xb,
+.bot-buttons>.right>.xyab>.a,
+.bot-buttons>.right>.xyab>.y {
+	display: flex;
+	width: 100%;
+}
+
+.bot-buttons>.right>.xyab>.xb {
+	flex-direction: row;
+}
+
+.bot-buttons>.right>.xyab>.xb>.x,
+.bot-buttons>.right>.xyab>.xb>.b {
+	display: flex;
+	width: 100%;
+}
+
+.bot-buttons>.center>.extras {
+	display: flex;
+	width: 100%;
+}
+
+.rsb {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding-bottom: 20px;
+}
+
+.lsb {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-bottom: 20px;
+}
+
+#lt-range {
+	direction: ltr;
+}
+
+#lt-range::-webkit-slider-thumb {
+	background-image: url('../assets/Xbox360/360_LT_Unpressed.png');
+}
+
+#lt-range::-moz-slider-thumb {
+	background-image: url('../assets/Xbox360/360_LT_Unpressed.png');
+}
+
+#rt-range {
+	direction: rtl;
+}
+
+#rt-range::-webkit-slider-thumb {
+	background-image: url('../assets/Xbox360/360_RT_Unpressed.png');
+}
+
+#rt-range::-moz-slider-thumb {
+	background-image: url('../assets/Xbox360/360_RT_Unpressed.png');
+}
+
+#lt-range.pressed::-webkit-slider-thumb {
+	background-image: url('../assets/Xbox360/360_LT_Pressed.png');
+}
+
+#lt-range.pressed::-moz-slider-thumb {
+	background-image: url('../assets/Xbox360/360_LT_Pressed.png');
+}
+
+#rt-range.pressed::-webkit-slider-thumb {
+	background-image: url('../assets/Xbox360/360_RT_Pressed.png');
+}
+
+#rt-range.pressed::-moz-slider-thumb {
+	background-image: url('../assets/Xbox360/360_RT_Pressed.png');
+}
+
+.slider {
+	-webkit-appearance: none;
+	height: 5px;
+	border-radius: 5px;
+	background: #FFFFFF;
+	outline: none;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 60px;
+	height: 140px;
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.slider::-moz-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 60px;
+	height: 140px;
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+#lb {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_LB_Unpressed.png) no-repeat;
+	background-size: 70px 70px;
+	margin-left: 50px;
+}
+
+#rb {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_RB_Unpressed.png) no-repeat;
+	background-size: 70px 70px;
+	margin-right: 50px;
+}
+
+#x {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_X_Unpressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto 20px auto auto;
+}
+
+#y {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_Y_Unpressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto;
+}
+
+#a {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_A_Unpressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto;
+}
+
+#b {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_B_Unpressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto auto auto 20px;
+}
+
+#start {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_Start_Alt_Unpressed.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#back {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_Back_Alt_Unpressed.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#guide {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_Guide_Unpressed.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#lb.pressed {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_LB_Pressed.png) no-repeat;
+	background-size: 70px 70px;
+	margin-left: 50px;
+}
+
+#rb.pressed {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_RB_Pressed.png) no-repeat;
+	background-size: 70px 70px;
+	margin-right: 50px;
+}
+
+#x.pressed {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_X_Pressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto 20px auto auto;
+}
+
+#y.pressed {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_Y_Pressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto;
+}
+
+#a.pressed {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_A_Pressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto;
+}
+
+#b.pressed {
+	width: 55px;
+	height: 55px;
+	background: url(../assets/Xbox360/360_B_Pressed.png) no-repeat;
+	background-size: 55px 55px;
+	margin: auto auto auto 20px;
+}
+
+#start.pressed {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_Start_Alt_Pressed.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#back.pressed {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_Back_Alt_Pressed.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#guide.pressed {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/360_Guide_Pressed.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#motion {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/motion_sensor.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#fullscreen {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/fullscreen.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+#fullscreen.pressed {
+	width: 70px;
+	height: 70px;
+	background: url(../assets/Xbox360/unfullscreen.png) no-repeat;
+	background-size: 70px 70px;
+}
+
+.motion_status {
+	border: solid #636363 2px;
+	width: 20px;
+	height: 10px;
+	margin: auto;
+}
+
+.motion_status.active {
+	background-color: #87d638;
+}
+
+.motion_status.inactive {
+	background-color: #e02727;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.dpad {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding-bottom: 20px;
+}
+
+.d-pad {
+	display: inline-block;
+	position: relative;
+	width: 125px;
+	height: 125px;
+	border-radius: 48%;
+	overflow: hidden;
+}
+
+.d-pad:before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-radius: 5%;
+	transform: translate(-50%, -50%);
+	width: 66.6%;
+	height: 66.6%;
+	background: #4c4c4c;
+}
+
+.d-pad button {
+	display: block;
+	position: absolute;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	width: 33.3%;
+	height: 43%;
+	line-height: 40%;
+	color: #fff;
+	background: #4c4c4c;
+	text-align: center;
+}
+
+.d-pad button:before {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-radius: 5px;
+	border-style: solid;
+	transition: all 0.25s;
+}
+
+.d-pad button.up {
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	border-radius: 17% 17% 50% 50%;
+}
+
+.d-pad button.up.hover {
+	background: linear-gradient(0deg, #4c4c4c 0%, #5f5f5f 50%);
+}
+
+.d-pad button.up:before {
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-width: 0 6px 9px 6px;
+	border-color: transparent transparent #aaa transparent;
+}
+
+.d-pad button.right {
+	top: 50%;
+	right: 0;
+	transform: translate(0, -50%);
+	border-radius: 50% 17% 17% 50%;
+}
+
+.d-pad button.right.hover {
+	background: linear-gradient(90deg, #4c4c4c 0%, #5f5f5f 50%);
+}
+
+.d-pad button.right:before {
+	right: 40%;
+	top: 50%;
+	transform: translate(50%, -50%);
+	border-width: 6px 0 6px 9px;
+	border-color: transparent transparent transparent #aaa;
+}
+
+.d-pad button.down {
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	border-radius: 50% 50% 17% 17%;
+}
+
+.d-pad button.down.hover {
+	background: linear-gradient(180deg, #4c4c4c 0%, #5f5f5f 50%);
+}
+
+.d-pad button.down:before {
+	bottom: 40%;
+	left: 50%;
+	transform: translate(-50%, 50%);
+	border-width: 9px 6px 0px 6px;
+	border-color: #aaa transparent transparent transparent;
+}
+
+.d-pad button.left {
+	top: 50%;
+	left: 0;
+	transform: translate(0, -50%);
+	border-radius: 17% 50% 50% 17%;
+}
+
+.d-pad button.left.hover {
+	background: linear-gradient(-90deg, #4c4c4c 0%, #5f5f5f 50%);
+}
+
+.d-pad button.left,
+.d-pad button.right {
+	width: 43%;
+	height: 33%;
+}
+
+.d-pad button.left:before {
+	left: 40%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border-width: 6px 9px 6px 0;
+	border-color: transparent #aaa transparent transparent;
+}
+
+.d-pad button.up-right {
+	top: 0;
+	left: 100%;
+	transform: translate(-100%, 0);
+	width: 42px;
+	height: 42px;
+	border-left: 2px solid #868686;
+	border-bottom: 2px solid #868686;
+	z-index: 2;
+	border-radius: 5px;
+	background: #404040;
+}
+
+.d-pad button.up-right:before {
+	display: none;
+}
+
+.d-pad button.up-right.hover {
+	background: linear-gradient(45deg, #404040 0%, #5f5f5f 50%);
+}
+
+.d-pad button.up-left {
+	top: 0;
+	left: 0%;
+	transform: translate(0, 0);
+	width: 42px;
+	height: 42px;
+	border-right: 2px solid #868686;
+	border-bottom: 2px solid #868686;
+	z-index: 2;
+	border-radius: 5px;
+	background: #404040;
+}
+
+.d-pad button.up-left:before {
+	display: none;
+}
+
+.d-pad button.up-left.hover {
+	background: linear-gradient(-45deg, #404040 0%, #5f5f5f 50%);
+}
+
+.d-pad button.down-right {
+	top: 100%;
+	left: 100%;
+	transform: translate(-100%, -100%);
+	width: 42px;
+	height: 42px;
+	border-left: 2px solid #868686;
+	border-top: 2px solid #868686;
+	z-index: 2;
+	border-radius: 5px;
+	background: #404040;
+}
+
+.d-pad button.down-right:before {
+	display: none;
+}
+
+.d-pad button.down-right.hover {
+	background: linear-gradient(135deg, #404040 0%, #5f5f5f 50%);
+}
+
+.d-pad button.down-left {
+	top: 100%;
+	left: 0;
+	transform: translate(0, -100%);
+	width: 42px;
+	height: 42px;
+	border-right: 2px solid #868686;
+	border-top: 2px solid #868686;
+	z-index: 2;
+	border-radius: 5px;
+	background: #404040;
+}
+
+.d-pad button.down-left:before {
+	display: none;
+}
+
+.d-pad button.down-left.hover {
+	background: linear-gradient(-135deg, #404040 0%, #5f5f5f 50%);
+}
+
+.menu_toggle {
+	position: fixed;
+	top: 5%;
+	height: 27px;
+	width: 35px;
+	cursor: pointer;
+	z-index: 100;
+	transition: opacity 0.25s ease;
+	left: 50%;
+	margin-left: -17.5px;
+	/* Negative half of width. */
+}
+
+.menu_toggle span {
+	background: #f5f5f5;
+	border: 2px solid #39393a;
+	border-radius: 5px;
+	border: none;
+	height: 5px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: all 0.35s ease;
+	cursor: pointer;
+}
+
+.menu_toggle span:nth-of-type(2) {
+	top: 11px;
+}
+
+.menu_toggle span:nth-of-type(3) {
+	top: 22px;
+}
+
+.menu_toggle.active .top {
+	transform: translateY(11px) translateX(0) rotate(45deg);
+	background: #FFF;
+}
+
+.menu_toggle.active .middle {
+	opacity: 0;
+	background: #FFF;
+}
+
+.menu_toggle.active .bottom {
+	transform: translateY(-11px) translateX(0) rotate(-45deg);
+	background: #FFF;
+}
+
+
+/* The Overlay (background) */
+
+.overlay {
+	/* Height & width depends on how you want to reveal the overlay (see JS below) */
+	height: 0%;
+	width: 100%;
+	position: fixed;
+	/* Stay in place */
+	z-index: 99;
+	/* Sit on top */
+	left: 0;
+	top: 0;
+	background-color: rgb(0, 0, 0);
+	/* Black fallback color */
+	background-color: rgba(0, 0, 0, 0.9);
+	/* Black w/opacity */
+	overflow-x: hidden;
+	/* Disable horizontal scroll */
+	transition: 0.5s;
+	/* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+
+/* Position the content inside the overlay */
+
+.overlay-content {
+	position: relative;
+	top: 25%;
+	/* 25% from the top */
+	width: 100%;
+	/* 100% width */
+	text-align: center;
+	/* Centered text/links */
+	margin-top: 30px;
+	/* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+
+/* The navigation links inside the overlay */
+
+.overlay a {
+	padding: 8px;
+	text-decoration: none;
+	font-size: 36px;
+	color: #818181;
+	display: block;
+	/* Display block instead of inline */
+	transition: 0.3s;
+	/* Transition effects on hover (color) */
+}
+
+
+/* When you mouse over the navigation links, change their color */
+
+.overlay a:hover,
+.overlay a:focus {
+	color: #f1f1f1;
+}
+
+
+/* Position the close button (top right corner) */
+
+.overlay .closebtn {
+	position: absolute;
+	top: 20px;
+	right: 45px;
+	font-size: 60px;
+}
+
+.settings {
+	width: 100%;
+	height: 100%;
+	padding-top: 65px;
+}
+
+.switch {
+	display: inline-flex;
+	margin: 0 10px;
+}
+
+.switch input[type=checkbox] {
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+.switch input[type=checkbox]:checked+label {
+	background: green;
+}
+
+.switch input[type=checkbox]:checked+label::after {
+	left: calc(100% - 4px);
+	transform: translateX(-100%);
+}
+
+.switch label {
+	cursor: pointer;
+	width: 48px;
+	height: 24px;
+	background: grey;
+	display: block;
+	border-radius: 24px;
+	position: relative;
+}
+
+.switch label::after {
+	content: "";
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 16px;
+	height: 16px;
+	background: white;
+	border-radius: 16px;
+	transition: 0.3s;
+}
+
+.settings>div {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "virtual-gamepad",
+  "version": "0.1.0",
+  "description": "An application to transform a phone into a controller",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "author": "FahrulID",
+  "license": "MIT",
+  "dependencies": {
+    "dree": "^3.3.0",
+    "express": "^4.17.1",
+    "screenshot-desktop": "^1.12.3",
+    "socket.io": "^3.0.3",
+    "vigemclient": "^1.1.2"
+  },
+  "pkg": {
+    "scripts": "*.js",
+    "assets": [
+      "static/**/*",
+      "ssl/**",
+      "./node_modules/vigemclient/**",
+      "./node_modules/vigemclient/build/Release/vigemclient.node"
+    ],
+    "outputPath": "../build",
+    "targets": [ "node16-win-x64" ]
+  }
+}

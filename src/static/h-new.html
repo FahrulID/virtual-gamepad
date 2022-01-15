@@ -1,0 +1,649 @@
+<html>
+    <head>
+        <title>XBOX 360 Virtual</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <script type="text/javascript" src="js/socket.io.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #212123;
+            }
+
+            .wrapper {
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .top-buttons, .bot-buttons {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .bot-buttons {
+                height: 100%;
+            }
+
+            .top-buttons > .left, .top-buttons > .right{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .bot-buttons > .left {
+                width: 100%;
+                display: flex;
+                margin: auto 0 auto 0;
+            }
+
+            .bot-buttons > .center {
+                width: auto;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .bot-buttons > .right {
+                width: auto;
+                margin: auto 50px auto auto;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .bot-buttons > .right > .xyab {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+            }
+
+            .bot-buttons > .right > .xyab > .xb, .bot-buttons > .right > .xyab > .a, .bot-buttons > .right > .xyab > .y {
+                display: flex;
+                width: 100%;
+            }
+
+            .bot-buttons > .right > .xyab > .xb {
+                flex-direction: row;
+            }
+
+            .bot-buttons > .right > .xyab > .xb > .x, .bot-buttons > .right > .xyab > .xb > .b {
+                display: flex;
+                width: 100%;
+            }
+
+            .bot-buttons > .center > .extras {
+                display: flex;
+                width: 100%;
+            }
+
+            #lt {
+                width: 70px;
+                height: 70px;
+                background: url(assets/360_LT.png) no-repeat;
+                background-size: 70px 70px;
+                margin-left: auto;
+            }
+
+            #lb {
+                width: 70px;
+                height: 70px;
+                background: url(assets/360_LB.png) no-repeat;
+                background-size: 70px 70px;
+                margin-left: 100px;
+                margin-right: 100px;
+            }
+
+            #rt {
+                width: 70px;
+                height: 70px;
+                background: url(assets/360_RT.png) no-repeat;
+                background-size: 70px 70px;
+                margin-right: auto;
+            }
+
+            #rb {
+                width: 70px;
+                height: 70px;
+                background: url(assets/360_RB.png) no-repeat;
+                background-size: 70px 70px; 
+                margin-left: 100px;
+                margin-right: 100px;
+            }
+
+            #x {
+                width: 55px;
+                height: 55px;
+                background: url(assets/360_X.png) no-repeat;
+                background-size: 55px 55px;
+                margin: auto 20px auto auto;
+            }
+
+            #y {
+                width: 55px;
+                height: 55px;
+                background: url(assets/360_Y.png) no-repeat;
+                background-size: 55px 55px;
+                margin: auto;
+            }
+
+            #a {
+                width: 55px;
+                height: 55px;
+                background: url(assets/360_A.png) no-repeat;
+                background-size: 55px 55px;
+                margin: auto;
+            }
+
+            #b {
+                width: 55px;
+                height: 55px;
+                background: url(assets/360_B.png) no-repeat;
+                background-size: 55px 55px;
+                margin: auto auto auto 20px;
+            }
+
+            #start {
+                width: 70px;
+                height: 70px;
+                background: url(assets/360_Start_Alt.png) no-repeat;
+                background-size: 70px 70px;
+            }
+
+            #back {
+                width: 70px;
+                height: 70px;
+                background: url(assets/360_Back_Alt.png) no-repeat;
+                background-size: 70px 70px;
+            }
+
+            #motion {
+                width: 70px;
+                height: 70px;
+                background: url(assets/motion_sensor.png) no-repeat;
+                background-size: 70px 70px;
+            }
+
+            #analog {
+                width: 70px;
+                height: 70px;
+                background: url(assets/analog.png) no-repeat;
+                background-size: 70px 70px;
+            }
+
+            .motion_status, .analog_status {
+                border: solid #636363 2px ;
+                width: 20px;
+                height: 10px;
+                margin: auto;
+            }
+
+            .motion_status.active, .analog_status.active {
+                background-color: #87d638;
+            }
+
+            .motion_status.inactive, .analog_status.inactive {
+                background-color: #e02727;
+            }
+
+            button, input[type="submit"], input[type="reset"] {
+                background: none;
+                color: inherit;
+                border: none;
+                padding: 0;
+                font: inherit;
+                cursor: pointer;
+                outline: inherit;
+            }
+        </style>
+    </head>
+    <body onload="init();" scroll="no" style="overflow: hidden;position: fixed;">
+        <div class="wrapper">
+            <div class="top-buttons">
+                <div class="left">
+                    <button id="lt"></button>
+                    <button id="lb"></button>
+                </div>
+                <div class="right">
+                    <button id="rb"></button>
+                    <button id="rt"></button>
+                </div>
+            </div>
+            <div class="bot-buttons">
+                <div class="left">
+                    <div class="lsb">
+                        <p style="text-align: center; color: #ffffff;">
+                            X: <span id="x_coordinate"> </span>
+                            Y: <span id="y_coordinate"> </span>
+                            Speed: <span id="speed"> </span> %
+                            Angle: <span id="angle"> </span>
+                        </p>
+                        <canvas id="leftAnalog" name="game"></canvas>
+                    </div>
+                </div>
+                <div class="center">
+                    <div class="extras">
+                        <div class="start">
+                            <button id="start"></button>
+                        </div>
+                        <div class="motion">
+                            <div class="motion_status inactive"></div>
+                            <button onclick="toggle_motion();" id="motion"></button>
+                        </div>
+                        <div class="back">
+                            <button id="back"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="xyab">
+                        <div class="y">
+                            <button id="y"></button>
+                        </div>
+                        <div class="xb">
+                            <div class="x">
+                                <button id="x"></button>
+                            </div>
+                            <div class="b">
+                                <button id="b"></button>
+                            </div>
+                        </div>
+                        <div class="a">
+                            <button id="a"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var motion = false;
+            function toggle_motion() {
+                if(motion){
+                    motion = false;
+                    $(".motion_status").removeClass("active").addClass("inactive");
+                } else {
+                    motion = true;
+                    $(".motion_status").removeClass("inactive").addClass("active");
+                }
+            }
+            function findParent(obj, length, target) {
+                for(i = 0; i < length;i++){
+                    if(obj[i].target.id == target){
+                        return obj[i];
+                    }
+                }
+            }
+            var socket;
+            // Variable
+            var vibration;
+            // Function
+            var vibrate;
+            // Interval
+            var startVibrate;
+            $(document).ready(function() {
+
+                //Vibration
+                vibration = false;
+                //Checking compatibility
+                if (window.navigator && window.navigator.vibrate) {
+                    vibrate = function(data) {
+                        if(data)
+                        {
+                            navigator.vibrate(5000);
+                        } else {
+                            navigator.vibrate(0);
+                        }
+                    }
+                } else {
+                    vibrate = false;
+                }
+
+                //Socket IO
+                socket = io();
+                
+                
+                socket.on('message', function(data){
+                    console.log(data);  
+                });
+                
+                socket.on('vibration', function(data){
+                    vibration = data;
+                    if(vibrate != false)
+                    {
+                        if(vibration) {
+                            startVibrate = setInterval(vibrate(true), 5000);
+                        } else {
+                            clearInterval(startVibrate);
+                            vibrate(false);
+                        }
+                    }
+                });
+            });
+    
+            function send(data)
+            {
+                socket.emit('message', data);
+            }
+        </script>
+        <!-- DIBAWAH INI JGN DIGANGGU -->
+        <script>
+            // Log events flag
+            var logEvents = false;
+
+            // Touch Point cache
+            var tpCache = new Array();
+
+            // Joystick 
+            var joystickEvent;
+            var touchCounter = 0;
+
+            function set_joystick_handlers(name) {
+                // Install event handlers for the given element
+                var el=document.getElementById(name);
+                el.ontouchstart = start_joystick_handler;
+                el.ontouchmove = move_joystick_handler;
+                // Use same handler for touchcancel and touchend
+                el.ontouchcancel = end_joystick_handler;
+                el.ontouchend = end_joystick_handler;
+            }
+
+            function start_joystick_handler(ev) {
+                // If the user makes simultaneous touches, the browser will fire a 
+                // separate touchstart event for each touch point. Thus if there are 
+                // three simultaneous touches, the first touchstart event will have 
+                // targetTouches length of one, the second event will have a length 
+                // of two, and so on.
+                ev.preventDefault();
+                // Cache the touch points for later processing of 2-touch pinch/zoom
+
+                touchCounter++;
+
+                if (ev.targetTouches.length == 2) {
+                    for (var i=0; i < ev.targetTouches.length; i++) {
+                        tpCache.push(ev.targetTouches[i]);
+                    }
+                }
+                if (logEvents) console.log("touchStart", ev, true);
+                startDrawing(ev);
+            }
+
+            function move_joystick_handler(ev) {
+                // Note: if the user makes more than one "simultaneous" touches, most browsers 
+                // fire at least one touchmove event and some will fire several touchmoves.
+                // Consequently, an application might want to "ignore" some touchmoves.
+                //
+                // This function sets the target element's border to "dashed" to visually
+                // indicate the target received a move event.
+                //
+                ev.preventDefault();
+
+                // Declaring the right event for handling the joystick 
+                joystickEvent = findParent(event.touches, touchCounter, "leftAnalog");
+
+                if (logEvents) console.log("touchMove", ev, false);
+                // To avoid too much color flashing many touchmove events are started,
+                // don't update the background if two touch points are active
+                Draw(ev);
+
+                // Set the target element's border to dashed to give a clear visual
+                // indication the element received a move event.
+                // ev.target.style.border = "dashed";
+
+                // Check this event for 2-touch Move/Pinch/Zoom gesture
+                // handle_pinch_zoom(ev);
+            }
+
+            // This is a very basic 2-touch move/pinch/zoom handler that does not include
+            // error handling, only handles horizontal moves, etc.
+            function handle_pinch_zoom(ev) {
+                if (ev.targetTouches.length == 2 && ev.changedTouches.length == 2) {
+                    // Check if the two target touches are the same ones that started
+                    // the 2-touch
+                    var point1=-1, point2=-1;
+                    for (var i=0; i < tpCache.length; i++) {
+                        if (tpCache[i].identifier == ev.targetTouches[0].identifier) point1 = i;
+                        if (tpCache[i].identifier == ev.targetTouches[1].identifier) point2 = i;
+                    }
+                    if (point1 >=0 && point2 >= 0) {
+                        // Calculate the difference between the start and move coordinates
+                        var diff1 = Math.abs(tpCache[point1].clientX - ev.targetTouches[0].clientX);
+                        var diff2 = Math.abs(tpCache[point2].clientX - ev.targetTouches[1].clientX);
+
+                        // This threshold is device dependent as well as application specific
+                        var PINCH_THRESHHOLD = ev.target.clientWidth / 10;
+                        if (diff1 >= PINCH_THRESHHOLD && diff2 >= PINCH_THRESHHOLD)
+                            ev.target.style.background = "green";
+                    }
+                    else {
+                        // empty tpCache
+                        tpCache = new Array();
+                    }
+                }
+            }
+
+            function end_joystick_handler(ev) {
+                ev.preventDefault();
+
+                touchCounter--;
+
+                if (logEvents) console.log(ev.type, ev, false);
+                if (ev.targetTouches.length == 0) {
+                    // Restore background and border to original values
+                    stopDrawing();
+                }
+            }
+
+            //Normal button
+            function set_handlers(name) {
+                // Install event handlers for the given element
+                var el=document.getElementById(name);
+                el.ontouchstart = start_handler;
+                // Use same handler for touchcancel and touchend
+                el.ontouchcancel = end_handler;
+                el.ontouchend = end_handler;
+            }
+
+            function start_handler(ev) {
+                // If the user makes simultaneous touches, the browser will fire a 
+                // separate touchstart event for each touch point. Thus if there are 
+                // three simultaneous touches, the first touchstart event will have 
+                // targetTouches length of one, the second event will have a length 
+                // of two, and so on.
+                ev.preventDefault();
+                // Cache the touch points for later processing of 2-touch pinch/zoom
+
+                touchCounter++;
+
+                if (ev.targetTouches.length == 2) {
+                    for (var i=0; i < ev.targetTouches.length; i++) {
+                        tpCache.push(ev.targetTouches[i]);
+                    }
+                }
+                if (logEvents) console.log("touchStart", ev, true);
+                // Kirim sinyal tekan tombol
+                console.log("TEKAN");
+                ev.target.style.border = "dashed";
+                send({inputType: "button", button: ev.target.id, v: 1});
+            }
+
+            function end_handler(ev) {
+                ev.preventDefault();
+
+                touchCounter--;
+
+                if (logEvents) console.log(ev.type, ev, false);
+                if (ev.targetTouches.length == 0) {
+                    // Restore background and border to original values
+                    // Kirim sinyal hentikan tekan tombol
+                    ev.target.style.border = "none";
+                    send({inputType: "button", button: ev.target.id, v: 0});
+                }
+            }
+
+            function init() {
+                set_joystick_handlers("leftAnalog");
+                set_handlers("a");
+                set_handlers("b");
+                set_handlers("y");
+                set_handlers("x");
+                set_handlers("lt");
+                set_handlers("lb");
+                set_handlers("rt");
+                set_handlers("rb");
+                set_handlers("start");
+                set_handlers("back");
+            }
+            
+        </script>
+        <script>
+            var canvas, ctx;
+    
+            window.addEventListener('load', () => {
+    
+                canvas = document.getElementById('leftAnalog');
+                ctx = canvas.getContext('2d');          
+                resize(); 
+    
+                //document.addEventListener('mousedown', startDrawing);
+                //document.addEventListener('mouseup', stopDrawing);
+                //document.addEventListener('mousemove', Draw);
+    
+                // document.addEventListener('touchstart', startDrawing);
+                // document.addEventListener('touchend', stopDrawing);
+                // document.addEventListener('touchcancel', stopDrawing);
+                // document.addEventListener('touchmove', Draw);
+                window.addEventListener('resize', resize);
+    
+                document.getElementById("x_coordinate").innerText = 0;
+                document.getElementById("y_coordinate").innerText = 0;
+                document.getElementById("speed").innerText = 0;
+                document.getElementById("angle").innerText = 0;
+            });
+    
+          
+    
+    
+            var width, height, radius, x_orig, y_orig;
+            function resize() {
+                width = 250;
+                radius = 50;
+                height = 250;
+                ctx.canvas.width = width;
+                ctx.canvas.height = height;
+                background();
+                joystick(width / 2, height / 3);
+            }
+    
+            function background() {
+                x_orig = width / 2;
+                y_orig = height / 3;
+    
+                ctx.beginPath();
+                ctx.arc(x_orig, y_orig, radius + 20, 0, Math.PI * 2, true);
+                ctx.fillStyle = '#272727';
+                ctx.fill();
+            }
+    
+            function joystick(width, height) {
+                ctx.beginPath();
+                ctx.arc(width, height, radius, 0, Math.PI * 2, true);
+                ctx.fillStyle = '#4e4e4e';
+                ctx.fill();
+                ctx.strokeStyle = '#606060';
+                ctx.lineWidth = 8;
+                ctx.stroke();
+            }
+    
+            let coord = { x: 0, y: 0 };
+            let paint = false;
+    
+            function getPosition(event) {
+                var mouse_x = event.clientX || joystickEvent.clientX;
+                var mouse_y = event.clientY || joystickEvent.clientY;
+                coord.x = mouse_x - canvas.offsetLeft;
+                coord.y = mouse_y - canvas.offsetTop;
+            }
+    
+            function is_it_in_the_circle() {
+                var current_radius = Math.sqrt(Math.pow(coord.x - x_orig, 2) + Math.pow(coord.y - y_orig, 2));
+                if (radius >= current_radius) return true
+                else return false
+            }
+    
+    
+            function startDrawing(event) {
+                paint = true;
+                getPosition(event);
+                if (is_it_in_the_circle()) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    background();
+                    joystick(coord.x, coord.y);
+                    Draw();
+                }
+            }
+    
+    
+            function stopDrawing() {
+                paint = false;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                background();
+                joystick(width / 2, height / 3);
+                document.getElementById("x_coordinate").innerText = 0;
+                document.getElementById("y_coordinate").innerText = 0;
+                document.getElementById("speed").innerText = 0;
+                document.getElementById("angle").innerText = 0;
+                
+                send({inputType: "axis", axis: canvas.id, a: 0, s: 0, x: 0, y: 0});
+    
+            }
+    
+            function Draw(event) {
+    
+                if (paint) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    background();
+                    var angle_in_degrees,x, y, speed;
+                    var angle = Math.atan2((coord.y - y_orig), (coord.x - x_orig));
+    
+                    if (Math.sign(angle) == -1) {
+                        angle_in_degrees = Math.round(-angle * 180 / Math.PI);
+                    }
+                    else {
+                        angle_in_degrees =Math.round( 360 - angle * 180 / Math.PI);
+                    }
+    
+    
+                    if (is_it_in_the_circle()) {
+                        joystick(coord.x, coord.y);
+                        x = coord.x;
+                        y = coord.y;
+                    }
+                    else {
+                        x = radius * Math.cos(angle) + x_orig;
+                        y = radius * Math.sin(angle) + y_orig;
+                        joystick(x, y);
+                    }
+    
+                
+                    getPosition(event);
+    
+                    var speed =  Math.round(100 * Math.sqrt(Math.pow(x - x_orig, 2) + Math.pow(y - y_orig, 2)) / radius);
+    
+                    var x_relative = Math.round(x - x_orig);
+                    var y_relative = Math.round(y - y_orig);
+                    
+    
+                    document.getElementById("x_coordinate").innerText =  x_relative;
+                    document.getElementById("y_coordinate").innerText = y_relative ;
+                    document.getElementById("speed").innerText = speed;
+                    document.getElementById("angle").innerText = angle_in_degrees;
+    
+                    //send( x_relative,y_relative,speed,angle_in_degrees);
+                    send({inputType: "axis", axis: canvas.id, a: angle_in_degrees, s: speed, x: x_relative, y: y_relative});
+                }
+            } 
+        </script>
+    </body>
+</html>
