@@ -110,6 +110,8 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
+Prerequisites for building this project.
+
 * npm
   ```sh
   npm install npm@latest -g
@@ -117,6 +119,13 @@ To get a local copy up and running follow these simple example steps.
 
 * ViGEmBus
   Download from [here](https://github.com/ViGEm/ViGEmBus/releases)
+
+* Python
+  Latest Python 3
+
+* Visual Studio
+  Latest Visual Studio including the "Desktop development with C++" workload.
+
 
 ### Build
 
