@@ -105,29 +105,33 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
+This is an example of how you can setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
 Prerequisites for building this project.
 
+- Node-server
+
 * npm
   ```sh
   npm install npm@latest -g
   ```
 
-* ViGEmBus
-  Download from [here](https://github.com/ViGEm/ViGEmBus/releases)
+* ViGEmBus, Download from [here](https://github.com/ViGEm/ViGEmBus/releases)
 
-* Python
-  Latest Python 3
+* Python, Latest Python 3
 
-* Visual Studio
-  Latest Visual Studio including the "Desktop development with C++" workload.
+* Visual Studio, Latest Visual Studio including the "Desktop development with C++" workload.
 
+- Webview-app
+
+* android studio, Download from [here](https://developer.android.com/studio)
 
 ### Build
+
+- Node-server
 
 1. Clone the repo
    ```sh
@@ -147,6 +151,20 @@ Prerequisites for building this project.
    pkg --config package.json index.js
    ```
 
+- Webview-app
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/FahrulID/virtual-gamepad.git
+   ```
+2. Open Android Studio
+3. Open an Existing Project
+   ```sh
+   Open project ./src/webview
+   ```
+4. Build
+
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -154,17 +172,28 @@ Prerequisites for building this project.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+- Node-server
+
 1. To use this application, you need to install [ViGEmBus](https://github.com/ViGEm/ViGEmBus/releases)
 2. After installing ViGEmBus, download released [virtual-gamepad](https://github.com/FahrulID/virtual-gamepad/releases)
 3. Run the portable executable you downloaded
 4. Go to the link as the application instructed
 
+- Webview-app
+
+1. Simply download the .apk from the release page [apk](https://github.com/FahrulID/virtual-gamepad/releases)
+2. Install it on your phone
+3. Run it
+4. Run the Node-server
+5. Input URL shown in Node-server to the Webview-app
+6. Press "Connect"
+
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
+
+- Node-server
 
 - [ ] Add Steering Mode ( Accelerometer )
 - [ ] Add Aiming Mode ( Gyroscope )

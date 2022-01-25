@@ -23,9 +23,12 @@
       "./node_modules/vigemclient/**",
       "./node_modules/vigemclient/build/Release/vigemclient.node"
     ],
-    "outputPath": "../build",
-    "targets": [ 
+    "outputPath": "../../build",
+    "targets": [
       "node16-win-x64"
     ]
+  },
+  "devDependencies": {
+    "electron": "^16.0.7"
   }
 }
