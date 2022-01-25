@@ -112,7 +112,7 @@ To get a local copy up and running follow these simple example steps.
 
 Prerequisites for building this project.
 
-- Node-server
+#### Node-server
 
 * npm
   ```sh
@@ -125,13 +125,13 @@ Prerequisites for building this project.
 
 * Visual Studio, Latest Visual Studio including the "Desktop development with C++" workload.
 
-- Webview-app
+#### Webview-app
 
 * android studio, Download from [here](https://developer.android.com/studio)
 
 ### Build
 
-- Node-server
+#### Node-server
 
 1. Clone the repo
    ```sh
@@ -151,7 +151,7 @@ Prerequisites for building this project.
    pkg --config package.json index.js
    ```
 
-- Webview-app
+#### Webview-app
 
 1. Clone the repo
    ```sh
@@ -172,14 +172,14 @@ Prerequisites for building this project.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-- Node-server
+#### Node-server
 
 1. To use this application, you need to install [ViGEmBus](https://github.com/ViGEm/ViGEmBus/releases)
 2. After installing ViGEmBus, download released [virtual-gamepad](https://github.com/FahrulID/virtual-gamepad/releases)
 3. Run the portable executable you downloaded
 4. Go to the link as the application instructed
 
-- Webview-app
+#### Webview-app
 
 1. Simply download the .apk from the release page [apk](https://github.com/FahrulID/virtual-gamepad/releases)
 2. Install it on your phone
@@ -193,7 +193,7 @@ Prerequisites for building this project.
 <!-- ROADMAP -->
 ## Roadmap
 
-- Node-server
+#### Node-server
 
 - [ ] Add Steering Mode ( Accelerometer )
 - [ ] Add Aiming Mode ( Gyroscope )
